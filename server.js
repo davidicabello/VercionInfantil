@@ -28,6 +28,9 @@ app.get('/health', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
-  console.log(`Aplicación disponible en: http://localhost:${PORT}`);
+  console.log(`🚀 Servidor iniciado correctamente`);
+  console.log(`📡 Puerto: ${PORT}`);
+  console.log(`🌐 URL: http://localhost:${PORT}`);
+  console.log(`✅ Health check: http://localhost:${PORT}/health`);
+  console.log(`📁 Archivos estáticos servidos desde: ${__dirname}`);
 }); 

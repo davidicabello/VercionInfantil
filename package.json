@@ -2,7 +2,7 @@
   "name": "invitacion-cumpleanos",
   "version": "1.0.0",
   "description": "Invitación digital de cumpleaños",
-  "main": "index.html",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },

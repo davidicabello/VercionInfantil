@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: invitacion-cumpleanos
+    name: vercioninfantil
     runtime: node
     plan: free
     buildCommand: npm install
