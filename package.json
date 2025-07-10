@@ -1,0 +1,27 @@
+{
+  "name": "invitacion-cumpleanos",
+  "version": "1.0.0",
+  "description": "Invitación digital de cumpleaños",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -s . -l $PORT"
+  },
+  "dependencies": {
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davidicabello/VercionInfantil.git"
+  },
+  "keywords": [
+    "invitacion",
+    "cumpleanos",
+    "web",
+    "static"
+  ],
+  "author": "Tu Nombre",
+  "license": "MIT"
+} 
