@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: vercioninfantil
+    name: invitacion-cumpleanos
     runtime: node
     plan: free
     buildCommand: npm install
@@ -9,4 +9,4 @@ services:
     autoDeploy: true
     envVars:
       - key: NODE_ENV
-        value: production
+        value: production 
