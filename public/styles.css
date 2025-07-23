@@ -205,9 +205,89 @@ body {
     width: 100vw;
   }
 
+  .hero-carousel .carousel-item img.hero-img {
+    object-fit: cover;
+    width: 100%;
+    height: 95vh;
+  }
+
   .hero-carousel-content {
     top: 80%;
     background-color: hsla(54, 93%, 87%, 0.5);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-carousel,
+  .hero-carousel .carousel,
+  .hero-carousel .carousel-inner,
+  .hero-carousel .carousel-item,
+  .hero-carousel .hero-img {
+    height: 90vh;
+    min-height: 200px;
+    width: 100vw;
+  }
+
+  .hero-carousel .carousel-item img.hero-img {
+    object-fit: cover;
+    width: 100%;
+    height: 90vh;
+  }
+}
+
+@media (max-width: 320px) {
+  .hero-carousel,
+  .hero-carousel .carousel,
+  .hero-carousel .carousel-inner,
+  .hero-carousel .carousel-item,
+  .hero-carousel .hero-img {
+    height: 85vh;
+    min-height: 180px;
+    width: 100vw;
+  }
+
+  .hero-carousel .carousel-item img.hero-img {
+    object-fit: cover;
+    width: 100%;
+    height: 85vh;
+  }
+}
+
+/* Optimización específica para fotos verticales 9:16 */
+@media (orientation: portrait) {
+  .hero-carousel,
+  .hero-carousel .carousel,
+  .hero-carousel .carousel-inner,
+  .hero-carousel .carousel-item,
+  .hero-carousel .hero-img {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .hero-carousel .carousel-item img.hero-img {
+    object-fit: cover;
+    width: 100%;
+    height: 100vh;
+    object-position: center;
+  }
+}
+
+/* Para pantallas muy altas (tablets en portrait) */
+@media (min-height: 800px) and (orientation: portrait) {
+  .hero-carousel,
+  .hero-carousel .carousel,
+  .hero-carousel .carousel-inner,
+  .hero-carousel .carousel-item,
+  .hero-carousel .hero-img {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .hero-carousel .carousel-item img.hero-img {
+    object-fit: cover;
+    width: 100%;
+    height: 100vh;
+    object-position: center;
   }
 }
 
@@ -305,7 +385,7 @@ section {
 }
 
 .calendar-links a:hover {
-  background: var(--primary-color);
+  background: var(--color-grey-dark);
   color: var(--button-text);
 }
 
@@ -665,8 +745,8 @@ footer {
   left: 0;
   border-top: 100px solid transparent;
   border-right: 150px solid var(--color-text-secondary);
-  border-bottom: 100px solid #e5345c;
-  border-left: 150px solid #e5345c;
+  border-bottom: 100px solid var(--color-grey-dark);
+  border-left: 150px solid var(--color-text-secondary);
   z-index: 3;
 }
 
@@ -793,8 +873,8 @@ footer {
   .envelope {
     border-top: 80px solid transparent;
     border-right: 120px solid var(--color-text-secondary);
-    border-bottom: 80px solid #e5345c;
-    border-left: 120px solid #e5345c;
+    border-bottom: 80px solid var(--color-grey-dark);
+    border-left: 120px solid var(--color-text-secondary);
   }
 
   .envelope-btn {

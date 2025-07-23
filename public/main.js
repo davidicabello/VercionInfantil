@@ -130,12 +130,12 @@ if (shareTwitter) {
 // =====================
 // DATOS DEL EVENTO (EDITA AQUÍ)
 // =====================
-const EVENT_TITLE = "Mi segundo año de Amadeo";
+const EVENT_TITLE = "Fiesta XV años de Vicky";
 const EVENT_DESCRIPTION = "Te espero en mi fiesta!";
-const EVENT_LOCATION = "Iglesia San Juan, Ciudad";
+const EVENT_LOCATION = "Clahe Eventos Wilde";
 // Formato: YYYY-MM-DDTHH:MM:SS (hora local)
-const EVENT_START = "2025-10-24T19:00:00";
-const EVENT_END = "2025-10-24T22:00:00";
+const EVENT_START = "2025-09-05T22:00:00";
+const EVENT_END = "2025-09-05T05:00:00";
 
 // =====================
 // FUNCIONES DE CALENDARIO
@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", updateCalendarLinks);
 // =====================
 // CONFIRMACIÓN DE ASISTENCIA - WhatsApp RSVP
 // =====================
-const RSVP_WHATSAPP_NUMBER = "5491162868825"; // sin +
+const RSVP_WHATSAPP_NUMBER = "541157032329"; // sin +
 const rsvpBtn = document.getElementById("rsvp-whatsapp-btn");
 if (rsvpBtn) {
   rsvpBtn.addEventListener("click", function () {
@@ -262,11 +262,13 @@ if (openInvitationBtn) {
     if (audio) {
       const playPromise = audio.play();
       if (playPromise !== undefined) {
-        playPromise.then(() => {
-          console.log("Audio reproducido automáticamente");
-        }).catch((error) => {
-          console.log("No se pudo reproducir automáticamente:", error);
-        });
+        playPromise
+          .then(() => {
+            console.log("Audio reproducido automáticamente");
+          })
+          .catch((error) => {
+            console.log("No se pudo reproducir automáticamente:", error);
+          });
       }
     }
 
@@ -297,5 +299,104 @@ if (openInvitationBtn) {
         }, 100);
       }, 800);
     }, 1500);
+  });
+}
+
+// =====================
+// AUDIO OPTIMIZADO - CONTROL DE RECURSOS
+// =====================
+const audio = document.getElementById("bg-audio");
+const btn = document.getElementById("audio-toggle");
+const icon = document.getElementById("audio-icon");
+let isPlaying = false;
+
+// Optimizar audio para móviles
+if (audio) {
+  // Reducir preload para ahorrar datos
+  audio.preload = "metadata";
+  // Volumen inicial más bajo
+  audio.volume = 0.7;
+  // Optimizar para móviles
+  audio.setAttribute("playsinline", "");
+  audio.setAttribute("webkit-playsinline", "");
+}
+
+// Pausar audio cuando la página pierde el foco (usuario cambia de app)
+document.addEventListener("visibilitychange", function () {
+  if (audio && !document.hidden && isPlaying) {
+    // Reanudar si la página vuelve a estar visible y estaba sonando
+    audio.play().catch((e) => console.log("No se pudo reanudar:", e));
+  } else if (audio && document.hidden && !audio.paused) {
+    // Pausar si la página se oculta
+    audio.pause();
+  }
+});
+
+// Pausar audio cuando el usuario sale de la página
+window.addEventListener("beforeunload", function () {
+  if (audio && !audio.paused) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+});
+
+// Pausar audio cuando la página se descarga
+window.addEventListener("pagehide", function () {
+  if (audio && !audio.paused) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+});
+
+// Intenta reproducir automáticamente
+window.addEventListener("DOMContentLoaded", () => {
+  if (audio) {
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          isPlaying = true;
+          setIcon();
+        })
+        .catch(() => {
+          isPlaying = false;
+          setIcon();
+        });
+    }
+  }
+});
+
+if (btn) {
+  btn.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+      isPlaying = true;
+    } else {
+      audio.pause();
+      isPlaying = false;
+    }
+    setIcon();
+  });
+}
+
+function setIcon() {
+  if (audio.paused) {
+    // Icono de pausa
+    icon.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+  } else {
+    // Icono de altavoz
+    icon.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`;
+  }
+}
+
+// Cambia el icono si el usuario pausa/reproduce desde controles externos
+if (audio) {
+  audio.addEventListener("play", setIcon);
+  audio.addEventListener("pause", setIcon);
+  // Manejar errores de audio
+  audio.addEventListener("error", function (e) {
+    console.log("Error de audio:", e);
+    isPlaying = false;
+    setIcon();
   });
 }
