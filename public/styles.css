@@ -5,7 +5,7 @@
   Paleta: FCF6BD (fondo), A9DEF9 (azul claro), D0F4DE (verde claro), FF99C8 (rosa pastel)
 */
 
-@import url("https://fonts.googleapis.com/css2?family=Mouse+Memoirs&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
 
 :root {
   --color-bg: #FAFAFA;
@@ -20,7 +20,7 @@
   --primary-color: #a9def9;
   --secondary-color: #d0f4de;
   --accent-color: #ff99c8;
-  --font-main: "Mouse Memoirs", sans-serif;
+  --font-main: "Instrument Sans", sans-serif;
   --header-text: #222;
   --button-text: #fff;
 }
@@ -35,7 +35,7 @@ h1, h2, h3, h4, h5, h6, p, span, label, a, li, td, th {
   color: var(--color-text);
 }
 
-.card, .modal, .overlay, .carousel, .hero-carousel-content, .gallery-item, .letter, .initial-overlay, .boton, .btn, .button {
+.card, .modal, .overlay, .carousel, .gallery-item, .letter, .initial-overlay, .boton, .btn, .button {
   background: var(--color-bg-card) !important;
   color: var(--color-text) !important;
   border-color: var(--color-border) !important;
@@ -164,42 +164,60 @@ body {
 
 .hero-carousel-content {
   position: absolute;
-  left: 50%;
-  top: 80%;
-  /* un poco debajo del centro */
+  right: 4vw;
+  bottom: 5vh;
   z-index: 3;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  width: 100%;
-  max-width: 700px;
-  color: #222;
+  text-align: right;
+  width: auto;
+  max-width: 80vw;
+  color: #111;
   pointer-events: none;
-  background-color: hsla(54, 93%, 87%, 0.5);
+  text-align: center;
+}
+
+/* Pincelada blanca detrás del texto (sin caja rígida) */
+.hero-carousel-content::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -1.2rem;
+  bottom: -0.8rem;
+  left: -1.2rem;
+  top: -0.8rem;
+  background-image: url('assets/brush.png');
+  background-size: 110% 500%;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.08));
+}
+
+.hero-carousel-content::after {
+  content: none;
 }
 
 .hero-carousel-content .nombre-festejada {
-  font-size: 4rem;
-  font-weight: 700;
-  color: #222;
-  text-shadow: 0 2px 16px #fff8, 0 1px 2px #0002;
-  letter-spacing: 3px;
+  font-size: clamp(2.6rem, 7.6vw, 4.8rem);
+  font-weight: 900;
+  color: #0d0d0d;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 22px rgba(255, 255, 255, 0.92), 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
 .hero-carousel-content .hero-subtitle {
-  font-size: 2rem;
-  color: var(--header-text);
-  font-weight: 600;
-  text-shadow: 0 2px 16px #fff8;
-  margin-bottom: 0;
+  margin-top: 0.5rem;
+  font-size: clamp(1rem, 3.4vw, 1.6rem);
+  color: #0d0d0d;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 18px rgba(255, 255, 255, 0.95);
 }
 
 @media (max-width: 768px) {
-  .hero-carousel-content .nombre-festejada {
-    font-size: 3.2rem;
-  }
-
-  .hero-carousel-content .hero-subtitle {
-    font-size: 2.2rem;
+  .hero-carousel-content {
+    right: 5vw;
+    bottom: 8vh;
   }
 
   .hero-carousel,
@@ -214,7 +232,6 @@ body {
 
   .hero-carousel-content {
     top: 80%;
-    background-color: hsla(54, 93%, 87%, 0.5);
   }
 }
 
@@ -300,7 +317,7 @@ section {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: #e5345c;
+  background: #730b0a;
   color: var(--header-text);
   font-weight: 200;
   border-radius: 1rem;
@@ -352,7 +369,7 @@ footer {
 }*/
 .evento-fecha {
   font-family: var(--font-main);
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: var(--header-text);
   font-weight: 700;
 }
@@ -528,7 +545,7 @@ footer {
 .evento-icon {
   width: 70px;
   height: 70px;
-  background: #e5345c;
+  background: #730b0a;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -840,4 +857,200 @@ svg, .icon, .icon svg {
   background: none !important;
   box-shadow: none !important;
   border: none !important;
+}
+
+/* =====================
+OVERLAY TICKET (nuevo)
+   ===================== */
+.ticket-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #FAFAFA 0%, #B0B0B0 100%) !important;
+  z-index: 10000;
+}
+
+.ticket-wrapper {
+  position: relative;
+  width: min(90vw, 720px);
+  height: min(85vh, 1100px);
+  max-width: 90vw;
+  max-height: 85vh;
+  --cut-y: 62%;
+  /* porcentaje vertical aproximado de la línea punteada */
+}
+
+.ticket-half {
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/ticket.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: transform 0.8s ease, opacity 0.5s ease;
+  will-change: transform, opacity;
+}
+
+.ticket-half.top {
+  clip-path: polygon(0 0, 100% 0, 100% var(--cut-y), 0 var(--cut-y));
+}
+
+.ticket-half.bottom {
+  clip-path: polygon(0 var(--cut-y), 100% var(--cut-y), 100% 100%, 0 100%);
+}
+
+.cut-line {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  top: var(--cut-y);
+  height: 44px;
+  /* área táctil amplia para mobile */
+  transform: translateY(-50%);
+  border: none;
+  /* usamos la línea del PNG, esta es invisible */
+  display: flex;
+  align-items: center;
+  touch-action: none;
+  /* permitir drag sin scroll */
+}
+
+.scissor-btn {
+  position: absolute;
+  top: 130%;
+  left: var(--scissor-x, 0%);
+  transform: translate(-10%, -10%);
+  background: rgba(17, 17, 17, 0.9);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.42rem 0.7rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px #0002;
+  transition: left 0.15s ease;
+  z-index: 3;
+  width: auto;
+  height: 60%;
+}
+
+.scissor-btn .cut-hint {
+  font-size: 0.85rem;
+  color: currentColor;
+}
+
+/* Contraste del icono con la regla global de SVG */
+.scissor-btn svg {
+  color: currentColor !important;
+  fill: none !important;
+  stroke: currentColor !important;
+}
+
+.scissor-btn:hover {
+  background: #fff;
+  color: #111;
+  border: 1px solid #111;
+}
+
+/* Mobile first: reducir tamaño del botón */
+@media (max-width: 480px) {
+  .scissor-btn {
+    padding: 0.36rem 0.6rem;
+    gap: 0.4rem;
+    top: 10%;
+  }
+
+  .scissor-btn .cut-hint {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .scissor-btn {
+    padding: 0.32rem 0.5rem;
+  }
+
+  .scissor-btn .cut-hint {
+    display: none;
+  }
+}
+
+/* Animación de guía: la tijera se desplaza a lo largo de la línea */
+@keyframes scissor-walk {
+  0% {
+    left: 0%;
+  }
+
+  50% {
+    left: 45%;
+  }
+
+  100% {
+    left: 0%;
+  }
+}
+
+.ticket-overlay.idle .scissor-btn {
+  animation: scissor-walk 2.2s ease-in-out infinite;
+}
+
+/* Estados de corte */
+.ticket-overlay.cutting .scissor-btn {
+  animation: scissor-walk 1.1s ease-in forwards;
+}
+
+.ticket-overlay.split .ticket-half.top {
+  transform: translateY(-60vh) rotate(-2deg);
+  opacity: 0;
+}
+
+.ticket-overlay.split .ticket-half.bottom {
+  transform: translateY(60vh) rotate(2deg);
+  opacity: 0;
+}
+
+.ticket-overlay.split {
+  animation: ticket-fade 0.6s 0.5s ease forwards;
+}
+
+@keyframes ticket-fade {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Leve vibración/vaivén del ticket en estado idle */
+@keyframes ticket-wiggle {
+  0% {
+    transform: rotate(0deg) translateY(0);
+  }
+
+  25% {
+    transform: rotate(-0.6deg) translateY(-2px);
+  }
+
+  50% {
+    transform: rotate(0.6deg) translateY(1px);
+  }
+
+  75% {
+    transform: rotate(-0.4deg) translateY(-1px);
+  }
+
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+}
+
+.ticket-overlay.idle .ticket-wrapper {
+  animation: ticket-wiggle 2.4s ease-in-out infinite;
+}
+
+.ticket-overlay.dragging .ticket-wrapper {
+  animation: none;
 }

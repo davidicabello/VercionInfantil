@@ -1,5 +1,5 @@
 <!--
-  PLANTILLA DE INVITACIÓN DIGITAL XV AÑOS
+  PLANTILLA DE INVITACIÓN DIGITAL 18 AÑOS
   --------------------------------------
   Edita los textos, imágenes y enlaces según tu evento.
   Usa styles.css para personalizar colores y fuentes.
@@ -10,31 +10,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Invitación Fiesta de XV - Vicky</title>
+    <title>Invitación Fiesta de 18 - Lautaro</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Te invito a compartir mi fiesta de 15 años. ¡Te espero para divertirnos juntos!" />
-    <meta name="keywords" content="fiesta de 15, quinceañera, invitación, celebración, XV años" />
-    <meta name="author" content="Vicky" />
+    <meta name="description" content="Te invito a compartir mi fiesta de 18 años. ¡Te espero para divertirnos juntos!" />
+    <meta name="keywords" content="fiesta de 18, quinceañera, invitación, celebración, 18 años" />
+    <meta name="author" content="Lautaro" />
     
     <!-- Open Graph Meta Tags (Facebook, WhatsApp, Instagram) -->
-    <meta property="og:title" content="Invitación Fiesta de XV - Vicky" />
-    <meta property="og:description" content="Te invito a compartir mi fiesta de 15 años. ¡Te espero para divertirnos juntos!" />
-    <meta property="og:image" content="https://invitacion-vicky-xv.web.app/assets/preview_vicky_xv.jpg?v=2025" />
+    <meta property="og:title" content="Invitación Fiesta de 18 - Lautaro" />
+    <meta property="og:description" content="Te invito a compartir mi fiesta de 18 años. ¡Te espero para divertirnos juntos!" />
+    <meta property="og:image" content="https://invitacion-Lautaro-18.web.app/assets/preview_lautaro_18.jpg?v=2025" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:url" content="https://invitacion-vicky-xv.web.app" />
+    <meta property="og:url" content="https://invitacion-Lautaro-18.web.app" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Fiesta de XV - Vicky" />
+    <meta property="og:site_name" content="Fiesta de 18 - Lautaro" />
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Invitación Fiesta de XV - Vicky" />
-    <meta name="twitter:description" content="Te invito a compartir mi fiesta de 15 años. ¡Te espero para divertirnos juntos!" />
-    <meta name="twitter:image" content="https://invitacion-vicky-xv.web.app/assets/preview_vicky_xv.jpg?v=2025" />
+    <meta name="twitter:title" content="Invitación Fiesta de 18 - Lautaro" />
+    <meta name="twitter:description" content="Te invito a compartir mi fiesta de 18 años. ¡Te espero para divertirnos juntos!" />
+    <meta name="twitter:image" content="https://invitacion-Lautaro-18.web.app/assets/preview_lautaro_18.jpg?v=2025" />
     
     <!-- WhatsApp specific -->
-    <meta property="og:image:secure_url" content="https://invitacion-vicky-xv.web.app/assets/preview_vicky_xv.jpg?v=2025" />
+    <meta property="og:image:secure_url" content="https://invitacion-Lautaro-18.web.app/assets/preview_lautaro_18.jpg?v=2025" />
     <!-- Bootstrap 5 CDN -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -51,13 +51,31 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   </head>
   <body>
-    <audio id="bg-audio" src="audio/cancion.mp3" loop autoplay style="display:none;"></audio>
+    <audio id="bg-audio" src="audio/cancion.mp3" loop style="display:none;"></audio>
     <button id="audio-toggle" aria-label="Activar/desactivar música de fondo" style="position:fixed;top:1rem;right:1rem;z-index:1000;background:rgba(255,255,255,0.8);border:none;border-radius:50%;padding:0.7em;box-shadow:0 2px 8px rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;width:48px;height:48px;">
       <span id="audio-icon">
         <!-- Icono altavoz SVG -->
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
       </span>
     </button>
+    <!-- OVERLAY INICIAL CON TICKET (nuevo) -->
+    <div id="ticket-overlay" class="ticket-overlay" aria-hidden="false">
+      <div class="ticket-wrapper" role="dialog" aria-label="Ticket de invitación">
+        <div class="ticket-half top" aria-hidden="true"></div>
+        <div class="ticket-half bottom" aria-hidden="true"></div>
+        <div class="cut-line" id="ticket-cut-line">
+          <button id="scissor-btn" class="scissor-btn" aria-label="Cortar el ticket">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <circle cx="6" cy="6" r="3"></circle>
+              <circle cx="6" cy="18" r="3"></circle>
+              <path d="M8.6 8.6L21 21"></path>
+              <path d="M8.6 15.4L21 3"></path>
+            </svg>
+            <span class="cut-hint">Deslizá para cortar</span>
+          </button>
+        </div>
+      </div>
+    </div>
     <!-- OVERLAY INICIAL CON SOBRE ANIMADO -->
     <div id="initial-overlay" class="initial-overlay">
       <div class="overlay-content">
@@ -68,7 +86,7 @@
           <div class="letter">
             <div class="letter-content">
              <!-- <div class="letter-name">Amadeo</div> -->
-              <div class="letter-text">Te invito a compartir mi fiesta de 15 años. Te Espero para divertirnos juntos.</div>
+              <div class="letter-text">Te invito a compartir mi fiesta de 18 años. Te Espero para divertirnos juntos.</div>
             </div>
           </div>
           <button id="open-invitation-btn" class="envelope-btn">
@@ -158,6 +176,11 @@
         </div>
         <div class="hero-carousel-overlay"></div>
       
+        <!-- Texto superpuesto al carrusel -->
+        <div class="hero-carousel-content container-fluid" aria-hidden="true">
+          <div class="nombre-festejada">LAUTARO</div>
+          <div class="hero-subtitle">MIS 18 AÑOS</div>
+        </div>
       </section>
 
       <!-- SECCIÓN FECHA Y COUNTDOWN -->
@@ -175,7 +198,7 @@
             "
           />
           <div class="evento-fecha display-5 mb-2">
-            Viernes 05 de Septiembre 2025
+            Sabado 08 de Noviembre 2025
           </div>
           <hr
             class="my-4"
@@ -266,24 +289,24 @@
                 <div class="evento-icon mb-3 mx-auto">
                   <i class="bi bi-calendar2-heart"></i>
                 </div>
-                <h5 class="evento-card-title mb-2">Fiesta de 15 años</h5>
+                <h5 class="evento-card-title mb-2">Fiesta de 18 años</h5>
                 <div class="evento-card-text mb-3">
                   <div style="font-size:1.2rem; font-weight:600; margin-bottom:0.5rem;">
-                    <i class="bi bi-calendar-event me-2"></i>Fecha: <span style="font-weight:700;">05-09-25</span>
+                    <i class="bi bi-calendar-event me-2"></i>Fecha: <span style="font-weight:700;">08-11-25</span>
                   </div>
                   <div style="font-size:1.1rem; margin-bottom:0.5rem;">
-                    <i class="bi bi-clock me-2"></i>Horario: <span style="font-weight:600;">10:00 PM a 05:00 AM</span>
+                    <i class="bi bi-clock me-2"></i>Horario: <span style="font-weight:600;">21:00 PM a 05:00 AM</span>
                   </div>
                   <div style="font-size:1.1rem; margin-bottom:0.5rem;">
-                    <i class="bi bi-geo-alt me-2"></i>Lugar: <span style="font-weight:600;">Clahe Eventos</span><br/>
-                    <span style="font-size:0.98rem;">Av. Mitre, Las Flores y Alberto Latigau al 6320</span>
+                    <i class="bi bi-geo-alt me-2"></i>Lugar: <span style="font-weight:600;">Centro de Jubilados de Ezpeleta</span><br/>
+                    <span style="font-size:0.98rem;">Av. Mitre, 4961</span>
                   </div>
                   <div style="font-size:1.05rem; margin:1.2rem 0 0.5rem 0; font-style:italic; color:#444;">
                     ¡Más abajo la ubicación!
                   </div>
                 </div>
                 <div class="ratio ratio-16x9 mb-3">
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.0453455043316!2d-58.321732903210446!3d-34.7040362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a33399ca6968b5%3A0x2b6d350614bea8a6!2sClahe%20Eventos%20Wilde%20I!5e0!3m2!1ses-419!2sar!4v1753221789910!5m2!1ses-419!2sar" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3278.4222273320856!2d-58.2293128!3d-34.7449553!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a32f1c805baf49%3A0xd4780b114523f9e0!2sAv.%20Mitre%204961%2C%20B1882%20Ezpeleta%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1760475480293!5m2!1ses-419!2sar" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
               </div>
             </div>
@@ -344,7 +367,7 @@
           >
             <div class="mb-3 text-start">
               <label for="rsvp-nombre" class="form-label"
-                >Nombre <span style="color: #ff99c8">*</span></label
+                >Nombre <span style="color: #333">*</span></label
               >
               <input
                 type="text"
@@ -356,7 +379,7 @@
             <div class="mb-3 text-start">
               <label for="rsvp-cantidad" class="form-label"
                 >¿Cuántas personas confirman?
-                <span style="color: #ff99c8">*</span></label
+                <span style="color: #333">*</span></label
               >
               <input
                 type="number"
@@ -370,7 +393,7 @@
             </div>
             <div class="mb-3 text-start">
               <label class="form-label"
-                >Menú preferido <span style="color: #ff99c8">*</span></label
+                >Menú preferido <span style="color: #333">*</span></label
               >
               <div class="form-check">
                 <input
@@ -441,7 +464,7 @@
               type="button"
               class="btn"
               id="rsvp-whatsapp-btn"
-              style="background:#e5345c !important; color:#fff !important; font-size:1.2rem; padding:0.8em 2em; justify-content:center; display:inline-flex; align-items:center; gap:0.7em; border-radius:0.7em; border:none; box-shadow:none;"
+              style="background:#730b0a !important; color:#fff !important; font-size:1.2rem; padding:0.8em 2em; justify-content:center; display:inline-flex; align-items:center; gap:0.7em; border-radius:0.7em; border:none; box-shadow:none;"
             >
               <i class="bi bi-whatsapp" style="font-size:1.5em; color:#fff;"></i>
               Confirmar asistencia por WhatsApp
@@ -474,9 +497,9 @@
             >
               <i
                 class="bi bi-instagram"
-                style="font-size: 2.2rem; color: #e5345c; margin-right: 1rem"
+                style="font-size: 2.2rem; color: #730b0a; margin-right: 1rem"
               ></i>
-              <span class="fs-5">@vicky_mis_15</span>
+              <span class="fs-5">@liooooonel07</span>
             </div>
             <hr
               class="my-4"
@@ -493,13 +516,11 @@
             >
               <i
                 class="bi bi-gift-fill"
-                style="font-size: 2.2rem; color: #e5345c; margin-right: 1rem"
+                style="font-size: 2.2rem; color: #730b0a; margin-right: 1rem"
               ></i>
               <span class="fs-5"
-                >Alias Mercado Pago: <span style="color: #e5345c;">Isabellainsfran.24</span>
+                >Alias: <span style="color: #730b0a;">lauu.zarate</span></span>
 
-               </span
-              >
             </div>
             <hr
               class="my-4"
@@ -515,7 +536,7 @@
   
           <div class="row justify-content-center mt-4">
             <div class="col-md-8 text-center">
-              <div class="hashtag fs-4 mt-3">#XVdeVicky2025</div>
+              <div class="hashtag fs-4 mt-3">#18deLautaro2025</div>
               <p class="mt-2">
                 ¡Comparte tus fotos y momentos usando mi hashtag!
               </p>
@@ -532,14 +553,14 @@
           <a
             href="https://www.instagram.com/davidicabello"
             target="_blank"
-            style="text-decoration: none; color: #e5345c"
+            style="text-decoration: none; color: #730b0a"
             >David Cabello</a
           >
           &
           <a
             href="https://caromuzzalupoph.web.app/"
             target="_blank"
-            style="text-decoration: none; color: #e5345c"
+            style="text-decoration: none; color: #730b0a"
             >Caro Muzzalupo</a
           >
 

@@ -1,6 +1,7 @@
 {
   "hosting": {
-    "public": "",
+    "public": "public",
+    "site": "invitacion-lautaro-18",
     "ignore": [
       "firebase.json",
       "**/.*",

@@ -1,10 +1,10 @@
-// PLANTILLA DE INVITACIÓN DIGITAL XV AÑOS - main.js
+// PLANTILLA DE INVITACIÓN DIGITAL 18 AÑOS - main.js
 // --------------------------------------------------
 // Incluye lógica para temporizador, WhatsApp, copiar CVU y compartir.
 
 // 1. Temporizador (Countdown)
 // Cambia la fecha del evento aquí:
-const EVENT_DATE = new Date("2025-09-05T22:00:00");
+const EVENT_DATE = new Date("2025-11-08T21:00:00");
 const countdownEl = document.getElementById("countdown");
 
 function updateCountdown() {
@@ -27,7 +27,7 @@ if (countdownEl) {
 
 // 2. Confirmación por WhatsApp
 // Cambia el número de WhatsApp aquí (solo números, sin + ni espacios):
-const WHATSAPP_NUMBER = "5215555555555";
+const WHATSAPP_NUMBER = "541128261077";
 const whatsappBtn = document.getElementById("whatsapp-btn");
 if (whatsappBtn) {
   whatsappBtn.addEventListener("click", function () {
@@ -100,7 +100,7 @@ const shareWhatsapp = document.getElementById("share-whatsapp");
 const shareFacebook = document.getElementById("share-facebook");
 const shareTwitter = document.getElementById("share-twitter");
 const INVITATION_URL = window.location.href;
-const SHARE_TEXT = "¡Te invito a mis XV Años! Mira la invitación:";
+const SHARE_TEXT = "¡Te invito a mis 18 Años! Mira la invitación:";
 
 if (shareWhatsapp) {
   shareWhatsapp.addEventListener("click", function () {
@@ -130,12 +130,12 @@ if (shareTwitter) {
 // =====================
 // DATOS DEL EVENTO (EDITA AQUÍ)
 // =====================
-const EVENT_TITLE = "Fiesta XV años de Vicky";
+const EVENT_TITLE = "Fiesta 18 años de Lautaro";
 const EVENT_DESCRIPTION = "Te espero en mi fiesta!";
-const EVENT_LOCATION = "Clahe Eventos Wilde";
+const EVENT_LOCATION = "Centro de Jubilados de Ezpeleta";
 // Formato: YYYY-MM-DDTHH:MM:SS (hora local)
-const EVENT_START = "2025-09-05T22:00:00";
-const EVENT_END = "2025-09-05T05:00:00";
+const EVENT_START = "2025-11-08T21:00:00";
+const EVENT_END = "2025-11-08T05:00:00";
 
 // =====================
 // FUNCIONES DE CALENDARIO
@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", updateCalendarLinks);
 // =====================
 // CONFIRMACIÓN DE ASISTENCIA - WhatsApp RSVP
 // =====================
-const RSVP_WHATSAPP_NUMBER = "541157032329"; // sin +
+const RSVP_WHATSAPP_NUMBER = "541128261077"; // sin +
 const rsvpBtn = document.getElementById("rsvp-whatsapp-btn");
 if (rsvpBtn) {
   rsvpBtn.addEventListener("click", function () {
@@ -246,6 +246,126 @@ if (rsvpBtn) {
     window.open(url, "_blank");
   });
 }
+
+// =====================
+// OVERLAY TICKET: interacción de corte
+// =====================
+(function initTicketOverlay() {
+  const ticketOverlay = document.getElementById("ticket-overlay");
+  if (!ticketOverlay) return;
+
+  // Ocultar overlay antiguo de sobre mientras exista ticket
+  const oldOverlay = document.getElementById("initial-overlay");
+  if (oldOverlay) {
+    oldOverlay.style.display = "none";
+  }
+
+  // Estado guía
+  ticketOverlay.classList.add("idle");
+
+  // Preload de la imagen del ticket
+  const img = new Image();
+  img.src = "assets/ticket.png";
+
+  const scissorBtn = document.getElementById("scissor-btn");
+  const cutLine = document.getElementById("ticket-cut-line");
+  const invitationContent = document.getElementById("invitation-content");
+  let dragActive = false;
+  let startX = null;
+  let lastClientX = null;
+
+  function finishCut() {
+    ticketOverlay.classList.remove("idle");
+    ticketOverlay.classList.add("split");
+    // Mostrar contenido luego de la animación
+    setTimeout(() => {
+      ticketOverlay.style.display = "none";
+      if (invitationContent) invitationContent.style.display = "block";
+      // Reiniciar AOS si está presente
+      if (typeof AOS !== "undefined") {
+        try { AOS.refreshHard ? AOS.refreshHard() : AOS.refresh(); } catch (_) {}
+      }
+      // Iniciar audio como en apertura del sobre
+      const audio = document.getElementById("bg-audio");
+      if (audio && audio.play) { audio.play().catch(() => {}); }
+      // Scroll a top
+      setTimeout(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, 100);
+    }, 900);
+  }
+
+  // Click en tijera
+  if (scissorBtn) {
+    scissorBtn.addEventListener("click", () => {
+      ticketOverlay.classList.remove("idle");
+      ticketOverlay.classList.add("cutting");
+      setTimeout(finishCut, 1100);
+    });
+  }
+
+  // Gestos de deslizamiento sobre la línea
+  if (cutLine) {
+    const minTravel = () => cutLine.clientWidth * 0.55; // umbral mobile-first
+    const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+    const percentFromX = (x) => {
+      const rect = cutLine.getBoundingClientRect();
+      const pct = ((x - rect.left) / rect.width) * 100;
+      return clamp(pct, 0, 100);
+    };
+
+    const syncScissor = (x) => {
+      const pct = percentFromX(x);
+      scissorBtn.style.setProperty('--scissor-x', pct + '%');
+    };
+
+    const onStart = (x) => {
+      ticketOverlay.classList.remove("idle");
+      ticketOverlay.classList.add("dragging");
+      dragActive = true;
+      startX = x;
+      lastClientX = x;
+      syncScissor(x);
+    };
+
+    const onMove = (x) => {
+      if (!dragActive) return;
+      lastClientX = x;
+      syncScissor(x);
+    };
+
+    const onEnd = (x) => {
+      ticketOverlay.classList.remove("dragging");
+      if (startX === null) return;
+      if (Math.abs(x - startX) >= minTravel()) {
+        finishCut();
+      } else {
+        // volver el botón a inicio suavemente
+        scissorBtn.style.setProperty('--scissor-x', '0%');
+      }
+      startX = null; dragActive = false; lastClientX = null;
+    };
+
+    // Pointer Events: funciona tanto en desktop como mobile moderno
+    cutLine.addEventListener("pointerdown", (e) => {
+      cutLine.setPointerCapture(e.pointerId);
+      onStart(e.clientX);
+      e.preventDefault();
+    });
+    cutLine.addEventListener("pointermove", (e) => { if (dragActive) onMove(e.clientX); });
+    cutLine.addEventListener("pointerup", (e) => { onEnd(e.clientX); });
+    cutLine.addEventListener("pointercancel", () => { startX = null; dragActive = false; });
+
+    // Touch fallback
+    cutLine.addEventListener("touchstart", (e) => {
+      if (e.changedTouches[0]) onStart(e.changedTouches[0].clientX);
+    }, { passive: true });
+    cutLine.addEventListener("touchmove", (e) => {
+      if (e.changedTouches[0]) onMove(e.changedTouches[0].clientX);
+    }, { passive: true });
+    cutLine.addEventListener("touchend", (e) => {
+      if (e.changedTouches[0]) onEnd(e.changedTouches[0].clientX);
+    });
+  }
+})();
 
 // =====================
 // SOBRE ANIMADO DE ABRIR INVITACIÓN
@@ -348,21 +468,11 @@ window.addEventListener("pagehide", function () {
   }
 });
 
-// Intenta reproducir automáticamente
+// Inicializa el icono sin reproducir en la carga
 window.addEventListener("DOMContentLoaded", () => {
   if (audio) {
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          isPlaying = true;
-          setIcon();
-        })
-        .catch(() => {
-          isPlaying = false;
-          setIcon();
-        });
-    }
+    isPlaying = !audio.paused;
+    setIcon();
   }
 });
 
