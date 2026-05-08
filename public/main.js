@@ -4,7 +4,7 @@
 
 // 1. Temporizador (Countdown)
 // Cambia la fecha del evento aquí:
-const EVENT_DATE = new Date("2025-11-08T21:00:00");
+const EVENT_DATE = new Date("2026-06-21T13:00:00");
 const countdownEl = document.getElementById("countdown");
 
 function updateCountdown() {
@@ -150,6 +150,11 @@ function toGoogleDate(dateStr) {
 }
 
 function updateCalendarLinks() {
+  const gcLink = document.getElementById("google-calendar-link");
+  const olLink = document.getElementById("outlook-calendar-link");
+  const icsLink = document.getElementById("icalendar-link");
+  if (!gcLink && !olLink && !icsLink) return; // elementos no presentes en esta página
+
   // Google Calendar
   const googleUrl =
     "https://www.google.com/calendar/render?action=TEMPLATE" +
@@ -163,7 +168,7 @@ function updateCalendarLinks() {
     encodeURIComponent(EVENT_DESCRIPTION) +
     "&location=" +
     encodeURIComponent(EVENT_LOCATION);
-  document.getElementById("google-calendar-link").href = googleUrl;
+  if (gcLink) gcLink.href = googleUrl;
 
   // Outlook Calendar
   const outlookUrl =
@@ -178,10 +183,10 @@ function updateCalendarLinks() {
     encodeURIComponent(EVENT_END) +
     "&location=" +
     encodeURIComponent(EVENT_LOCATION);
-  document.getElementById("outlook-calendar-link").href = outlookUrl;
+  if (olLink) olLink.href = outlookUrl;
 
   // iCalendar (.ics) dinámico
-  document.getElementById("icalendar-link").onclick = function (e) {
+  if (icsLink) icsLink.onclick = function (e) {
     e.preventDefault();
     const dtStart = toGoogleDate(EVENT_START).replace(/Z$/, "");
     const dtEnd = toGoogleDate(EVENT_END).replace(/Z$/, "");
@@ -214,7 +219,7 @@ document.addEventListener("DOMContentLoaded", updateCalendarLinks);
 // =====================
 // CONFIRMACIÓN DE ASISTENCIA - WhatsApp RSVP
 // =====================
-const RSVP_WHATSAPP_NUMBER = "541128261077"; // sin +
+const RSVP_WHATSAPP_NUMBER = "541161282992"; // sin +
 const rsvpBtn = document.getElementById("rsvp-whatsapp-btn");
 if (rsvpBtn) {
   rsvpBtn.addEventListener("click", function () {
@@ -283,11 +288,11 @@ if (rsvpBtn) {
       if (invitationContent) invitationContent.style.display = "block";
       // Reiniciar AOS si está presente
       if (typeof AOS !== "undefined") {
-        try { AOS.refreshHard ? AOS.refreshHard() : AOS.refresh(); } catch (_) {}
+        try { AOS.refreshHard ? AOS.refreshHard() : AOS.refresh(); } catch (_) { }
       }
       // Iniciar audio como en apertura del sobre
       const audio = document.getElementById("bg-audio");
-      if (audio && audio.play) { audio.play().catch(() => {}); }
+      if (audio && audio.play) { audio.play().catch(() => { }); }
       // Scroll a top
       setTimeout(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, 100);
     }, 900);
@@ -370,7 +375,7 @@ if (rsvpBtn) {
 // =====================
 // SOBRE ANIMADO DE ABRIR INVITACIÓN
 // =====================
-const openInvitationBtn = document.getElementById("open-invitation-btn");
+const openInvitationBtn = document.getElementById("btn-ingresar");
 const initialOverlay = document.getElementById("initial-overlay");
 const invitationContent = document.getElementById("invitation-content");
 const envelopeWrapper = document.querySelector(".envelope-wrapper");
@@ -392,18 +397,21 @@ if (openInvitationBtn) {
       }
     }
 
+    // Si no existe el sobre animado, esta página usa su propio mecanismo de entrada
+    if (!envelopeWrapper) return;
+
     // Iniciar animación del sobre
     envelopeWrapper.classList.add("opening");
 
     // Esperar a que termine la animación del sobre (1.5s total)
     setTimeout(() => {
       // Ocultar overlay con animación
-      initialOverlay.classList.add("fade-out");
+      if (initialOverlay) initialOverlay.classList.add("fade-out");
 
       // Mostrar contenido de la invitación
       setTimeout(() => {
-        initialOverlay.style.display = "none";
-        invitationContent.style.display = "block";
+        if (initialOverlay) initialOverlay.style.display = "none";
+        if (invitationContent) invitationContent.style.display = "block";
 
         // Reinicializar AOS para que las animaciones funcionen
         if (typeof AOS !== "undefined") {

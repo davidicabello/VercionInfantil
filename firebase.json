@@ -1,7 +1,7 @@
 {
   "hosting": {
+    "site": "primer-cumple-luz",
     "public": "public",
-    "site": "invitacion-lautaro-18",
     "ignore": [
       "firebase.json",
       "**/.*",
